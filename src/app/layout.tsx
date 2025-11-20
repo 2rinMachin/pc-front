@@ -1,35 +1,30 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "./globals.css";
-import { twJoin } from "tailwind-merge";
-import Header from "@/common/components/Header";
-import Footer from "@/common/components/Footer";
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
+import PageContent from '@/components/PageContent';
+import { sharpSans } from '@/fonts';
+import type { Metadata } from 'next';
+import { ReactNode } from 'react';
+import { twJoin } from 'tailwind-merge';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "Pizza Hut",
+  title: 'Pizza Hut',
 };
 
-const sharpSans = localFont({
-  src: "./SharpSansDispNo1-Semibold.woff2",
-});
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en" className="min-h-full flex flex-col">
-      <body
-        className={twJoin(
-          sharpSans.className,
-          "antialiased flex flex-col grow",
-        )}
-      >
-        <Header />
-        <div className="grow">{children}</div>
-        <Footer />
-      </body>
-    </html>
-  );
+export interface Props {
+  children: ReactNode;
 }
+
+const RootLayout = ({ children }: Props) => (
+  <html lang="es" className="flex min-h-full flex-col">
+    <body
+      className={twJoin(sharpSans.className, 'flex grow flex-col antialiased')}
+    >
+      <Header />
+      <PageContent>{children}</PageContent>
+      <Footer />
+    </body>
+  </html>
+);
+
+export default RootLayout;

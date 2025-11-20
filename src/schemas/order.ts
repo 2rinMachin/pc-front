@@ -1,0 +1,30 @@
+import { z } from 'zod';
+
+export const ORDER_STATUSES = [
+  'wait_for_cook',
+  'cooking',
+  'wait_for_dispatcher',
+  'dispatching',
+  'wait_for_deliverer',
+  'delivering',
+  'complete',
+];
+
+export const OrderStatus = z.literal(ORDER_STATUSES);
+export type OrderStatus = z.infer<typeof OrderStatus>;
+
+export const OrderItem = z.object({
+  product_id: z.string(),
+  quantity: z.int(),
+});
+
+export type OrderItem = z.infer<typeof OrderItem>;
+
+export const Order = z.object({
+  tenant_id: z.string(),
+  order_id: z.string(),
+  items: z.array(OrderItem),
+  status: OrderStatus,
+});
+
+export type Order = z.infer<typeof Order>;
