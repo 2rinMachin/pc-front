@@ -1,3 +1,5 @@
+import { formatPrice } from '@/util';
+
 const products = [
   {
     name: 'Pizza Familiar Crown',
@@ -35,7 +37,7 @@ const HomePage = () => {
                   <span className="text-sm">Desde</span>{' '}
                   <div className="inline-flex min-h-7 items-center">
                     <span className="text-accent text-xl font-semibold">
-                      S/.{product.price}
+                      {formatPrice(product.price)}
                     </span>
                   </div>
                 </div>
