@@ -1,6 +1,6 @@
 import Link from 'next/link';
+import AccountButton from './AccountButton';
 import Logo from './icons/Logo';
-import Person from './icons/Person';
 import Phone from './icons/Phone';
 
 const PHONE_NUMBER = '(01)505-1111';
@@ -20,13 +20,7 @@ const Header = () => {
             <Phone className="size-6" />
             <span className="textmd not-md:hidden">{PHONE_NUMBER}</span>
           </Link>
-
-          <Link
-            href="/login"
-            className="cursor-pointer rounded-md p-3 transition-colors hover:bg-black/10 focus:outline-2 focus:outline-white"
-          >
-            <Person className="size-6" />
-          </Link>
+          <AccountButton />
         </div>
       </div>
     </header>

@@ -1,6 +1,6 @@
+import Providers from '@/components/context/Providers';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
-import PageContent from '@/components/PageContent';
 import { sharpSans } from '@/fonts';
 import type { Metadata } from 'next';
 import { ReactNode } from 'react';
@@ -20,9 +20,11 @@ const RootLayout = ({ children }: Props) => (
     <body
       className={twJoin(sharpSans.className, 'flex grow flex-col antialiased')}
     >
-      <Header />
-      <PageContent>{children}</PageContent>
-      <Footer />
+      <Providers>
+        <Header />
+        <div className="grow">{children}</div>
+        <Footer />
+      </Providers>
     </body>
   </html>
 );

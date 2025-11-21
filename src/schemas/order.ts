@@ -8,7 +8,7 @@ export const ORDER_STATUSES = [
   'wait_for_deliverer',
   'delivering',
   'complete',
-];
+] as const;
 
 export const OrderStatus = z.literal(ORDER_STATUSES);
 export type OrderStatus = z.infer<typeof OrderStatus>;
