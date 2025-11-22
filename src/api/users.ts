@@ -38,6 +38,7 @@ export const contract = c.router(
       responses: {
         201: z.unknown(),
         400: z.unknown(),
+        409: z.unknown(),
       },
     },
     getSelf: {
