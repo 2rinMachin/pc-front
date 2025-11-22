@@ -15,6 +15,7 @@ const AuthProvider = ({ children }: Props) => {
   const { data, isLoading } = useQuery({
     queryKey: ['users', 'self'],
     queryFn: () => apiClients.users.getSelf(),
+    retry: false,
   });
 
   const auth: AuthContextValue = {
