@@ -5,7 +5,7 @@ export const Product = z.object({
   product_id: z.string(),
   name: z.string(),
   image_url: z.string().nullable().optional(),
-  price: z.number(),
+  price: z.coerce.number(),
 });
 
 export type Product = z.infer<typeof Product>;
