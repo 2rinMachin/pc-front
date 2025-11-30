@@ -26,6 +26,21 @@ const AddProductPage = () => {
     redirect(`/dashboard/catalog/product?id=${res.body.product_id}`);
   };
 
+  // eslint-disable-next-line react-hooks/incompatible-library
+  const image = form.watch('image');
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64 = reader.result as string;
+      form.setValue('image', base64.split(',')[1]);
+    };
+    reader.readAsDataURL(file);
+  };
+
   // TODO: add allowedRoles
   return (
     <ProtectedPage>
@@ -66,6 +81,23 @@ const AddProductPage = () => {
               )}
             </label>
           </div>
+          <label className="block">
+            Imagen
+            <input
+              type="file"
+              accept="image/*"
+              className="border-muted block w-full rounded border px-3 py-4"
+              onChange={handleImageUpload}
+            />
+            {image && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={`data:image/png;base64,${image}`}
+                alt="preview"
+                className="mt-4 h-40 w-auto rounded border"
+              />
+            )}
+          </label>
           <button className="bg-accent text-background rounded px-6 py-3 text-lg">
             Añadir
           </button>

@@ -7,6 +7,7 @@ import { useApiClients } from '@/hooks/use-api-clients';
 import { UpdateProductRequest } from '@/schemas/update-product-requests';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery } from '@tanstack/react-query';
+import Image from 'next/image';
 import { redirect, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -63,15 +64,29 @@ const ProductPage = () => {
     window.location.reload();
   };
 
+  const product = productData.body;
+
   // TODO: add allowedRoles
   return (
     <ProtectedPage>
-      <main className="mx-auto max-w-4xl py-12">
+      <main className="mx-auto max-w-3xl py-12">
         <h1
           className={twJoin(brixtonWood.className, 'mb-8 text-6xl uppercase')}
         >
           Información de producto
         </h1>
+
+        {product.image_url && (
+          <div className="relative mb-8 h-80 w-full">
+            <Image
+              src={product.image_url}
+              unoptimized
+              alt="product"
+              fill
+              className="rounded object-cover"
+            />
+          </div>
+        )}
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="flex gap-x-3">

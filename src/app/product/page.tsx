@@ -1,11 +1,12 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
+import LoadingScreen from '@/components/LoadingScreen';
 import { useApiClients } from '@/hooks/use-api-clients';
-import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
 import { formatPrice } from '@/util';
+import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
+import { useState } from 'react';
 
 const ProductPage = () => {
   const searchParams = useSearchParams();
@@ -13,11 +14,7 @@ const ProductPage = () => {
 
   const apiClients = useApiClients();
 
-  const {
-    data,
-    isLoading,
-    isError,
-  } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ['product', productId],
     queryFn: () =>
       productId
@@ -39,20 +36,11 @@ const ProductPage = () => {
 
   if (!productId) {
     return (
-      <main className="p-6 text-center text-red-500">
-        Producto inválido
-      </main>
+      <main className="p-6 text-center text-red-500">Producto inválido</main>
     );
   }
 
-
-  if (isLoading || !data) {
-    return (
-      <main className="p-6 text-center">
-        Cargando producto...
-      </main>
-    );
-  }
+  if (isLoading || !data) return <LoadingScreen />;
 
   if (isError) {
     return (
@@ -74,20 +62,24 @@ const ProductPage = () => {
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-8">
-      <div className="rounded-lg border p-6 shadow">
+      <div className="rounded-lg p-6 shadow">
         {product.image_url && (
-          <Image
-            src={product.image_url}
-            alt={product.name}
-            className="mb-6 w-full rounded-md"
-          />
+          <div className="relative mb-8 h-80 w-full">
+            <Image
+              src={product.image_url}
+              unoptimized
+              alt="product"
+              fill
+              className="rounded object-cover"
+            />
+          </div>
         )}
 
         <h1 className="text-3xl font-semibold">{product.name}</h1>
 
         <div className="mt-4 flex items-baseline gap-x-2">
-          <span className="text-sm text-muted">Precio:</span>
-          <span className="text-2xl font-bold text-accent">
+          <span className="text-muted text-sm">Precio:</span>
+          <span className="text-accent text-2xl font-bold">
             {formatPrice(product.price)}
           </span>
         </div>
@@ -113,7 +105,7 @@ const ProductPage = () => {
 
           <button
             onClick={handleAddToCart}
-            className="rounded-md bg-accent px-5 py-2 font-medium text-white"
+            className="bg-accent rounded-md px-5 py-2 font-medium text-white"
           >
             Añadir al carrito
           </button>
