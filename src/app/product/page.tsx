@@ -9,7 +9,7 @@ import Image from 'next/image';
 
 const ProductPage = () => {
   const searchParams = useSearchParams();
-  const productId = searchParams.get('id');
+  const productId = searchParams.get('product_id');
 
   const apiClients = useApiClients();
 
@@ -36,6 +36,15 @@ const ProductPage = () => {
   const handleAddToCart = () => {
     console.log('Añadiendo al carrito:', { product: data?.body, qty });
   };
+
+  if (!productId) {
+    return (
+      <main className="p-6 text-center text-red-500">
+        Producto inválido
+      </main>
+    );
+  }
+
 
   if (isLoading || !data) {
     return (
