@@ -25,6 +25,7 @@ export type OrderItem = z.infer<typeof OrderItem>;
 export const OrderHistoryEntry = z.object({
   status: OrderStatus,
   date: z.coerce.date(),
+  user: User,
 });
 
 export type OrderHistoryEntry = z.infer<typeof OrderHistoryEntry>;
@@ -36,6 +37,10 @@ export const Order = z.object({
   items: z.array(OrderItem),
   status: OrderStatus,
   created_at: z.coerce.date(),
+
+  cook: User.optional(),
+  dispatcher: User.optional(),
+  driver: User.optional(),
   history: z.array(OrderHistoryEntry),
 });
 

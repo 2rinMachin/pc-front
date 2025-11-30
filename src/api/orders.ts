@@ -17,6 +17,8 @@ export const contract = c.router(
       method: 'GET',
       path: '/orders',
       query: z.object({
+        last_key: z.string().optional(),
+        limit: z.number().optional(),
         status: OrderStatus.optional(),
         client_id: z.string().optional(),
         cook_id: z.string().optional(),
