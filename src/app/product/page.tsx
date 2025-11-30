@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useState } from 'react';
+import { PopularProducts } from '../../components/PopularProducts';
 
 const ProductPage = () => {
   const searchParams = useSearchParams();

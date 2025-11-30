@@ -1,11 +1,12 @@
 'use client';
 
-import { brixtonWood } from '@/fonts';
+import { brixtonWood, sharpSans } from '@/fonts';
 import { useAuth } from '@/hooks/use-auth';
 import Link from 'next/link';
 import { LuCar, LuNewspaper } from 'react-icons/lu';
 import { twJoin } from 'tailwind-merge';
 import { StatsPieChart } from '../../components/StatsPieChart';
+import { PopularProducts } from '../../components/PopularProducts';
 
 const DashboardPage = () => {
   const auth = useAuth();
@@ -16,45 +17,52 @@ const DashboardPage = () => {
         Dashboard
       </h1>
 
-      <section className="mx-auto max-w-4xl">
-        <h2 className={twJoin(brixtonWood.className, 'mb-8 text-5xl uppercase')}>
+      <section className="mx-auto max-w-4xl p-5">
+        <h2 className="mb-6 text-2xl font-semibold">
           Estadísticas
         </h2>
         <StatsPieChart />
       </section>
 
-      <section className="mx-auto max-w-4xl">
-        <h2 className={twJoin(brixtonWood.className, 'mb-8 text-5xl uppercase')}>
+      <section className="mx-auto max-w-4xl p-5">
+        <h2 className="mb-6 text-2xl font-semibold">
+          Productos más populares
+        </h2>
+        <PopularProducts />
+      </section>
+
+      <section className="mx-auto max-w-4xl p-5">
+        <h2 className="mb-6 text-2xl font-semibold">
           Más opciones
         </h2>
 
-      <nav className="wrap flex justify-center gap-x-8 gap-y-3 text-lg mb-12">
-        {auth.user && auth.user.role !== 'admin' && (
+        <nav className="wrap flex justify-center gap-x-8 gap-y-3 text-lg mb-12">
+          {auth.user && auth.user.role !== 'admin' && (
+            <Link
+              href="/dashboard/panel"
+              className="bg-accent text-background rounded px-6 py-3"
+            >
+              <LuCar className="mr-2 inline" />
+              Panel de atención
+            </Link>
+          )}
           <Link
-            href="/dashboard/panel"
+            href="/dashboard/orders"
             className="bg-accent text-background rounded px-6 py-3"
           >
-            <LuCar className="mr-2 inline" />
-            Panel de atención
+            <LuNewspaper className="mr-2 inline" />
+            Todos los pedidos
           </Link>
-        )}
-        <Link
-          href="/dashboard/orders"
-          className="bg-accent text-background rounded px-6 py-3"
-        >
-          <LuNewspaper className="mr-2 inline" />
-          Todos los pedidos
-        </Link>
-        {auth.user && auth.user.role === 'admin' && (
-          <Link
-            href="/dashboard/catalog"
-            className="bg-accent text-background rounded px-6 py-3"
-          >
-            <LuCar className="mr-2 inline" />
-            Gestionar catálogo
-          </Link>
-        )}
-      </nav>
+          {auth.user && auth.user.role === 'admin' && (
+            <Link
+              href="/dashboard/catalog"
+              className="bg-accent text-background rounded px-6 py-3"
+            >
+              <LuCar className="mr-2 inline" />
+              Gestionar catálogo
+            </Link>
+          )}
+        </nav>
       </section>
     </main>
   );
