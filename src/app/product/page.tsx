@@ -7,7 +7,7 @@ import { formatPrice } from '@/util';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 
 const ProductPage = () => {
   const searchParams = useSearchParams();
@@ -122,4 +122,12 @@ const ProductPage = () => {
   );
 };
 
-export default ProductPage;
+const ProductPageStatic = () => {
+  return (
+    <Suspense fallback={<LoadingScreen />}>
+      <ProductPage />
+    </Suspense>
+  );
+};
+
+export default ProductPageStatic;
