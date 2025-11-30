@@ -7,6 +7,7 @@ export const env = createEnv({
     NEXT_PUBLIC_USERS_URL: z.url(),
     NEXT_PUBLIC_ORDERS_URL: z.url(),
     NEXT_PUBLIC_CATALOG_URL: z.url(),
+    NEXT_PUBLIC_ANALYTICS_URL: z.url(),
     NEXT_PUBLIC_WEBSOCKET_URL: z.string().nonempty(),
   },
   experimental__runtimeEnv: {
@@ -14,6 +15,7 @@ export const env = createEnv({
     NEXT_PUBLIC_USERS_URL: process.env.NEXT_PUBLIC_USERS_URL,
     NEXT_PUBLIC_ORDERS_URL: process.env.NEXT_PUBLIC_ORDERS_URL,
     NEXT_PUBLIC_CATALOG_URL: process.env.NEXT_PUBLIC_CATALOG_URL,
+    NEXT_PUBLIC_ANALYTICS_URL: process.env.NEXT_PUBLIC_ANALYTICS_URL,
     NEXT_PUBLIC_WEBSOCKET_URL: process.env.NEXT_PUBLIC_WEBSOCKET_URL,
   },
   emptyStringAsUndefined: true,
