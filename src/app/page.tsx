@@ -1,11 +1,14 @@
 'use client';
 
 import { useApiClients } from '@/hooks/use-api-clients';
+import { Product } from '@/schemas/product';
 import { formatPrice } from '@/util';
 import { useQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 
 const HomePage = () => {
   const apiClients = useApiClients();
+  const router = useRouter();
 
   const { data } = useQuery({
     queryKey: ['product-list'],
@@ -13,6 +16,10 @@ const HomePage = () => {
   });
 
   const products = data?.body;
+
+  const handleClick = (product: Product) => {
+    router.push(`/product?product_id=${product.product_id}`);
+  };
 
   return (
     <>
@@ -25,7 +32,11 @@ const HomePage = () => {
 
             <ul className="grid grid-cols-2 gap-4">
               {products.map((product, i) => (
-                <li key={i} className="cursor-pointer rounded-lg shadow-md">
+                <li
+                  key={i}
+                  className="cursor-pointer rounded-lg shadow-md hover:bg-accent/10 transition"
+                  onClick={() => handleClick(product)}
+                >
                   <div className="px-2 py-3">
                     <h3 className="text-xl font-semibold uppercase">
                       {product.name}
