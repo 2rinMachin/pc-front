@@ -51,8 +51,11 @@ const OrderCard = ({
   return (
     <li
       key={order.order_id}
-      className="space-y-3 rounded-md px-4 py-3 shadow-lg"
+      className="relative space-y-3 overflow-hidden rounded-md px-4 py-3 shadow-lg"
     >
+      {showAction && !actionEnabled && (
+        <div className="absolute top-0 left-0 z-10 h-full w-full bg-black/25"></div>
+      )}
       <div className="flex items-center justify-between gap-x-6">
         <div className="flex items-center gap-x-2">
           <LuUser className="size-6" />

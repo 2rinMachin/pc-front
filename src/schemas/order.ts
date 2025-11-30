@@ -38,9 +38,9 @@ export const Order = z.object({
   status: OrderStatus,
   created_at: z.coerce.date(),
 
-  cook: User.optional(),
-  dispatcher: User.optional(),
-  driver: User.optional(),
+  cook: User.nullable().optional(),
+  dispatcher: User.nullable().optional(),
+  driver: User.nullable().optional(),
   history: z.array(OrderHistoryEntry),
 });
 
