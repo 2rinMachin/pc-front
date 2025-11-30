@@ -9,7 +9,9 @@ export interface Props {
   children: ReactNode | ReactNode[];
 }
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { refetchOnWindowFocus: false } },
+});
 
 const Providers = ({ children }: Props) => (
   <QueryClientProvider client={queryClient}>

@@ -3,6 +3,7 @@
 import GoBackButton from '@/components/GoBackButton';
 import Person from '@/components/icons/Person';
 import { brixtonWood } from '@/fonts';
+import { useApiClients } from '@/hooks/use-api-clients';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { twJoin, twMerge } from 'tailwind-merge';
@@ -12,11 +13,20 @@ import LogOut from './icons/LogOut';
 const links = [
   { href: '/my-account/details', label: 'Mis Detalles', Icon: Person },
   { href: '/my-account/orders', label: 'Mis Pedidos', Icon: Clock },
-  { href: '/logout', label: 'Cerrar Sesión', Icon: LogOut },
 ] as const;
 
 const NavPanel = () => {
+  const apiClients = useApiClients();
   const pathname = usePathname();
+
+  const logOut = async () => {
+    try {
+      await apiClients.users.logout();
+    } finally {
+      localStorage.removeItem('sessionToken');
+      window.location.href = '/';
+    }
+  };
 
   return (
     <aside className="h-full w-80 rounded-lg bg-white p-4 shadow-sm">
@@ -31,7 +41,7 @@ const NavPanel = () => {
       >
         Cuenta
       </h1>
-      <nav className="flex flex-col gap-1">
+      <nav className="flex flex-col">
         {links.map((item) => {
           const active = pathname.startsWith(item.href);
           return (
@@ -39,10 +49,10 @@ const NavPanel = () => {
               key={item.href}
               href={item.href}
               className={twMerge(
-                'flex rounded-md px-3 py-2 text-base font-medium transition-colors',
-                'hover:bg-gray-100',
-                active &&
-                  'border-accent text-accent border-l-4 bg-gray-100 font-semibold',
+                'flex px-4 py-3 text-base font-medium transition-colors',
+                active
+                  ? 'text-accent bg-accent/10 font-semibold'
+                  : 'hover:bg-gray-100',
               )}
             >
               <item.Icon
@@ -52,6 +62,14 @@ const NavPanel = () => {
             </Link>
           );
         })}
+        <hr className="my-2 border border-neutral-300" />
+        <button
+          onClick={logOut}
+          className="flex rounded-md px-3 py-2 text-base font-medium transition-colors hover:bg-gray-100"
+        >
+          <LogOut className="mr-10 h-6 w-6" />
+          Cerrar Sesión
+        </button>
       </nav>
     </aside>
   );

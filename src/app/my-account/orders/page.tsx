@@ -39,7 +39,12 @@ const UserOrdersPage = () => {
             href={`/my-account/orders/track?id=${order.order_id}`}
             className="block"
           >
-            <OrderCard order={order} showAction={false} actionEnabled={false} />
+            <OrderCard
+              showStatus
+              order={order}
+              showAction={false}
+              actionEnabled={false}
+            />
           </Link>
         ))}
       </ul>

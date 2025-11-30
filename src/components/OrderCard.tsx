@@ -7,8 +7,9 @@ import { useInterval } from 'usehooks-ts';
 export interface Props {
   order: Order;
   actionEnabled: boolean;
-  showAction: boolean;
+  showAction?: boolean;
   showTimer?: boolean;
+  showStatus?: boolean;
   handleAction?: () => void;
 }
 
@@ -21,11 +22,22 @@ const actionLabels: Partial<Record<OrderStatus, string>> = {
   delivering: 'Comenzar delivery',
 };
 
+const statusLabels: Record<OrderStatus, string> = {
+  wait_for_cook: 'Esperando cocinero',
+  cooking: 'Cocinando',
+  wait_for_dispatcher: 'Esperando despachador',
+  dispatching: 'Despachando',
+  wait_for_deliverer: 'Esperando conductor',
+  delivering: 'En camino',
+  complete: 'Entregado',
+};
+
 const OrderCard = ({
   order,
   actionEnabled,
   showAction = true,
   showTimer = false,
+  showStatus = false,
   handleAction,
 }: Props) => {
   const lastEntry = order.history[0];
@@ -39,7 +51,7 @@ const OrderCard = ({
   return (
     <li
       key={order.order_id}
-      className="space-y-3 rounded-md px-4 py-2 shadow-lg"
+      className="space-y-3 rounded-md px-4 py-3 shadow-lg"
     >
       <div className="flex items-center justify-between gap-x-6">
         <div className="flex items-center gap-x-2">
@@ -57,6 +69,7 @@ const OrderCard = ({
             </button>
           </div>
         )}
+        {showStatus && <div>{statusLabels[order.status]}</div>}
       </div>
       <ul>
         {order.items.map((item, i) => (
