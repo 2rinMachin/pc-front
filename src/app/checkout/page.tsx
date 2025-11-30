@@ -46,17 +46,17 @@ const CheckoutPage = () => {
   const handleConfirm = async () => {
     if (!data) return;
 
-    await apiClients.orders.createOrder({
+    const res = await apiClients.orders.createOrder({
       body: {
         items: data.map((i) => ({
-          product: i.product,
+          product_id: i.product.product_id,
           quantity: i.quantity,
         })),
       },
     });
 
     clearCart();
-    router.push('/success');
+    router.push(`/my-account/orders/track?id=${res.body.order_id}`);
   };
 
   return (
