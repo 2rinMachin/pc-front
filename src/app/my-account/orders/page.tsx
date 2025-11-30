@@ -23,7 +23,8 @@ const UserOrdersPage = () => {
       }),
   });
 
-  if (isLoading || orders === undefined) return <LoadingScreen />;
+  if (isLoading || auth.loading || orders === undefined)
+    return <LoadingScreen />;
 
   if (error) {
     console.error(error);

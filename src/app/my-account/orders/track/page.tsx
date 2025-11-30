@@ -82,9 +82,7 @@ const OrderPage = () => {
     return <main>Algo salió mal :(</main>;
   }
 
-  if (orderData.status === 404) {
-    return <main>Orden no encontrada.</main>;
-  }
+  if (orderData.status === 404) return <main>Orden no encontrada.</main>;
 
   const order = orderData.body;
   const lastEntry = order.history[0];
