@@ -69,13 +69,17 @@ const ProductPage = () => {
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-8">
-      <div className="rounded-lg border p-6 shadow">
+      <div className="rounded-lg p-6 shadow">
         {product.image_url && (
-          <Image
-            src={product.image_url}
-            alt={product.name}
-            className="mb-6 w-full rounded-md"
-          />
+          <div className="relative mb-8 h-80 w-full">
+            <Image
+              src={product.image_url}
+              unoptimized
+              alt="product"
+              fill
+              className="rounded object-cover"
+            />
+          </div>
         )}
 
         <h1 className="text-3xl font-semibold">{product.name}</h1>
