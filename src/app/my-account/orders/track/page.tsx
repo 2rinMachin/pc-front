@@ -7,6 +7,7 @@ import { ORDER_STATUSES, OrderStatus } from '@/schemas/order';
 import { dayjs } from '@/util';
 import { useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 import { LuCalendar } from 'react-icons/lu';
 import { twJoin } from 'tailwind-merge';
 
@@ -57,6 +58,7 @@ const StatusBar = ({ current }: { current: OrderStatus }) => {
 
 const OrderPage = () => {
   const params = useSearchParams();
+
   const orderId = params.get('id');
   const apiClients = useApiClients();
 
@@ -127,4 +129,12 @@ const OrderPage = () => {
   );
 };
 
-export default OrderPage;
+const OrderPageStatic = () => {
+  return (
+    <Suspense fallback={<>Cargando...</>}>
+      <OrderPage />
+    </Suspense>
+  );
+};
+
+export default OrderPageStatic;
