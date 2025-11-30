@@ -5,15 +5,30 @@ import { useAuth } from '@/hooks/use-auth';
 import Link from 'next/link';
 import { LuCar, LuNewspaper } from 'react-icons/lu';
 import { twJoin } from 'tailwind-merge';
+import { StatsPieChart } from '../../components/StatsPieChart';
 
 const DashboardPage = () => {
   const auth = useAuth();
+
   return (
     <main className="mx-auto max-w-4xl py-12">
       <h1 className={twJoin(brixtonWood.className, 'mb-8 text-6xl uppercase')}>
         Dashboard
       </h1>
-      <nav className="wrap flex justify-center gap-x-8 gap-y-3 text-lg">
+
+      <section className="mx-auto max-w-4xl">
+        <h2 className={twJoin(brixtonWood.className, 'mb-8 text-5xl uppercase')}>
+          Estadísticas
+        </h2>
+        <StatsPieChart />
+      </section>
+
+      <section className="mx-auto max-w-4xl">
+        <h2 className={twJoin(brixtonWood.className, 'mb-8 text-5xl uppercase')}>
+          Más opciones
+        </h2>
+
+      <nav className="wrap flex justify-center gap-x-8 gap-y-3 text-lg mb-12">
         {auth.user && auth.user.role !== 'admin' && (
           <Link
             href="/dashboard/panel"
@@ -30,15 +45,17 @@ const DashboardPage = () => {
           <LuNewspaper className="mr-2 inline" />
           Todos los pedidos
         </Link>
-        {/* {auth.user && auth.user.role === 'admin' && ( */}
-        <Link
-          href="/dashboard/catalog"
-          className="bg-accent text-background rounded px-6 py-3"
-        >
-          <LuCar className="mr-2 inline" />
-          Gestionar catálogo
-        </Link>
+        {auth.user && auth.user.role === 'admin' && (
+          <Link
+            href="/dashboard/catalog"
+            className="bg-accent text-background rounded px-6 py-3"
+          >
+            <LuCar className="mr-2 inline" />
+            Gestionar catálogo
+          </Link>
+        )}
       </nav>
+      </section>
     </main>
   );
 };
