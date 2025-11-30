@@ -77,7 +77,7 @@ const ProductPage = () => {
         </h1>
 
         {product.image_url && (
-          <div className="relative mb-8 h-80 w-full">
+          <div className="relative mb-7 h-80 w-full">
             <Image
               src={product.image_url}
               unoptimized
