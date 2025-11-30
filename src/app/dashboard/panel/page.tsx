@@ -2,6 +2,7 @@
 
 import LoadingScreen from '@/components/LoadingScreen';
 import OrderCard from '@/components/OrderCard';
+import ProtectedPage from '@/components/ProtectedPage';
 import { env } from '@/env';
 import { brixtonWood } from '@/fonts';
 import { useApiClients } from '@/hooks/use-api-clients';
@@ -137,65 +138,67 @@ const PanelPage = () => {
   if (!auth.user || !orders || !activeOrders) return <LoadingScreen />;
 
   return (
-    <main className="mx-auto max-w-5xl px-6 py-8">
-      <div className="mb-8">
-        <h1
-          className={twJoin(brixtonWood.className, 'mb-3 text-6xl uppercase')}
-        >
-          Panel de pedidos
-        </h1>
-        <p className="text-lg">
-          Tu rol:{' '}
-          <span className="font-semibold uppercase">
-            {roleLabels[auth.user.role]}
-          </span>
-        </p>
-      </div>
+    <ProtectedPage>
+      <main className="mx-auto max-w-5xl px-6 py-8">
+        <div className="mb-8">
+          <h1
+            className={twJoin(brixtonWood.className, 'mb-3 text-6xl uppercase')}
+          >
+            Panel de pedidos
+          </h1>
+          <p className="text-lg">
+            Tu rol:{' '}
+            <span className="font-semibold uppercase">
+              {roleLabels[auth.user.role]}
+            </span>
+          </p>
+        </div>
 
-      <div className="grid grid-rows-2 divide-solid divide-neutral-300 not-md:divide-y md:grid-cols-2 md:divide-x">
-        <div className="px-8 not-md:py-6">
-          <h2 className="mb-6 text-center text-4xl">Pedidos en cola</h2>
-          {orders.body.items.length === 0 ? (
-            <p className="text-muted mb-12 text-center text-xl">
-              No hay pedidos en espera.
-            </p>
-          ) : (
-            <ul className="space-y-3">
-              {orders.body.items.map((order, idx) => (
-                <OrderCard
-                  key={order.order_id}
-                  order={order}
-                  actionEnabled={idx === 0}
-                  handleAction={() => handleAction(order)}
-                />
-              ))}
-            </ul>
-          )}
+        <div className="grid grid-rows-2 divide-solid divide-neutral-300 not-md:divide-y md:grid-cols-2 md:divide-x">
+          <div className="px-8 not-md:py-6">
+            <h2 className="mb-6 text-center text-4xl">Pedidos en cola</h2>
+            {orders.body.items.length === 0 ? (
+              <p className="text-muted mb-12 text-center text-xl">
+                No hay pedidos en espera.
+              </p>
+            ) : (
+              <ul className="space-y-3">
+                {orders.body.items.map((order, idx) => (
+                  <OrderCard
+                    key={order.order_id}
+                    order={order}
+                    actionEnabled={idx === 0}
+                    handleAction={() => handleAction(order)}
+                  />
+                ))}
+              </ul>
+            )}
+          </div>
+          <div className="px-8 not-md:py-6">
+            <h2 className="mb-6 text-center text-4xl">
+              {roleInfo[auth.user.role].inProgress}
+            </h2>
+            {activeOrders.body.items.length === 0 ? (
+              <p className="text-muted mb-12 text-center text-xl">
+                No tienes pedidos en curso.
+              </p>
+            ) : (
+              <ul className="mb-12 space-y-3">
+                {activeOrders.body.items.map((order) => (
+                  <OrderCard
+                    key={order.order_id}
+                    order={order}
+                    actionEnabled
+                    handleAction={() => handleAction(order)}
+                    showTimer
+                  />
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
-        <div className="px-8 not-md:py-6">
-          <h2 className="mb-6 text-center text-4xl">
-            {roleInfo[auth.user.role].inProgress}
-          </h2>
-          {activeOrders.body.items.length === 0 ? (
-            <p className="text-muted mb-12 text-center text-xl">
-              No tienes pedidos en curso.
-            </p>
-          ) : (
-            <ul className="mb-12 space-y-3">
-              {activeOrders.body.items.map((order) => (
-                <OrderCard
-                  key={order.order_id}
-                  order={order}
-                  actionEnabled
-                  handleAction={() => handleAction(order)}
-                  showTimer
-                />
-              ))}
-            </ul>
-          )}
-        </div>
-      </div>
-    </main>
+      </main>
+    </ProtectedPage>
   );
 };
 
