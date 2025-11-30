@@ -34,7 +34,7 @@ const HomePage = () => {
               {products.map((product, i) => (
                 <li
                   key={i}
-                  className="cursor-pointer rounded-lg shadow-md hover:bg-accent/10 transition"
+                  className="hover:bg-accent/10 cursor-pointer rounded-lg shadow-md transition"
                   onClick={() => handleClick(product)}
                 >
                   <div className="px-2 py-3">

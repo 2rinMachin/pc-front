@@ -4,6 +4,7 @@ import { useAuth } from '@/hooks/use-auth';
 import { UserRole } from '@/schemas/user';
 import Link from 'next/link';
 import AccountButton from './AccountButton';
+import CartButton from './CartButton';
 import Logo from './icons/Logo';
 import Phone from './icons/Phone';
 
@@ -53,6 +54,7 @@ const Header = () => {
             <Phone className="size-6" />
             <span className="textmd not-md:hidden">{PHONE_NUMBER}</span>
           </Link>
+          <CartButton />
           <AccountButton />
         </div>
       </div>

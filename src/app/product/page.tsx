@@ -1,11 +1,13 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
+import LoadingScreen from '@/components/LoadingScreen';
 import { useApiClients } from '@/hooks/use-api-clients';
-import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useCart } from '@/hooks/use-cart';
 import { formatPrice } from '@/util';
+import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
+import { useState } from 'react';
 
 const ProductPage = () => {
   const searchParams = useSearchParams();
@@ -13,11 +15,7 @@ const ProductPage = () => {
 
   const apiClients = useApiClients();
 
-  const {
-    data,
-    isLoading,
-    isError,
-  } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ['product', productId],
     queryFn: () =>
       productId
@@ -33,25 +31,22 @@ const ProductPage = () => {
   const inc = () => setQty((q) => q + 1);
   const dec = () => setQty((q) => (q > 1 ? q - 1 : 1));
 
+  const { addItem } = useCart();
+
   const handleAddToCart = () => {
+    if (!product) return;
+    addItem(product.product_id, qty);
     console.log('Añadiendo al carrito:', { product: data?.body, qty });
   };
 
   if (!productId) {
     return (
-      <main className="p-6 text-center text-red-500">
-        Producto inválido
-      </main>
+      <main className="p-6 text-center text-red-500">Producto inválido</main>
     );
   }
 
-
   if (isLoading || !data) {
-    return (
-      <main className="p-6 text-center">
-        Cargando producto...
-      </main>
-    );
+    return <LoadingScreen />;
   }
 
   if (isError) {
@@ -86,8 +81,8 @@ const ProductPage = () => {
         <h1 className="text-3xl font-semibold">{product.name}</h1>
 
         <div className="mt-4 flex items-baseline gap-x-2">
-          <span className="text-sm text-muted">Precio:</span>
-          <span className="text-2xl font-bold text-accent">
+          <span className="text-muted text-sm">Precio:</span>
+          <span className="text-accent text-2xl font-bold">
             {formatPrice(product.price)}
           </span>
         </div>
@@ -113,7 +108,7 @@ const ProductPage = () => {
 
           <button
             onClick={handleAddToCart}
-            className="rounded-md bg-accent px-5 py-2 font-medium text-white"
+            className="bg-accent rounded-md px-5 py-2 font-medium text-white"
           >
             Añadir al carrito
           </button>
