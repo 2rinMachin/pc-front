@@ -6,18 +6,20 @@ import { brixtonWood } from '@/fonts';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { twJoin, twMerge } from 'tailwind-merge';
+import Clock from './icons/Clock';
+import LogOut from './icons/LogOut';
 
 const links = [
-  { href: '/my-account/details', label: 'Mis Detalles' },
-  { href: '/my-account/orders', label: 'Historial de Pedidos' },
-  { href: '/logout', label: 'Cerrar Sesión' },
+  { href: '/my-account/details', label: 'Mis Detalles', Icon: Person },
+  { href: '/my-account/orders', label: 'Mis Pedidos', Icon: Clock },
+  { href: '/logout', label: 'Cerrar Sesión', Icon: LogOut },
 ] as const;
 
 const NavPanel = () => {
   const pathname = usePathname();
 
   return (
-    <aside className="w-100 rounded-lg bg-white p-4 shadow-sm">
+    <aside className="h-full w-80 rounded-lg bg-white p-4 shadow-sm">
       <div className="my-1">
         <GoBackButton />
       </div>
@@ -31,7 +33,7 @@ const NavPanel = () => {
       </h1>
       <nav className="flex flex-col gap-1">
         {links.map((item) => {
-          const active = pathname === item.href;
+          const active = pathname.startsWith(item.href);
           return (
             <Link
               key={item.href}
@@ -43,8 +45,8 @@ const NavPanel = () => {
                   'border-accent text-accent border-l-4 bg-gray-100 font-semibold',
               )}
             >
-              <Person
-                className={twMerge('mr-10 h-6 w-6', active && 'text-red-600')}
+              <item.Icon
+                className={twMerge('mr-10 h-6 w-6', active && 'text-accent')}
               />
               {item.label}
             </Link>

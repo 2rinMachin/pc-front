@@ -16,8 +16,18 @@ export const contract = c.router(
     getAllOrders: {
       method: 'GET',
       path: '/orders',
+      query: z.object({
+        status: OrderStatus.optional(),
+        client_id: z.string().optional(),
+        cook_id: z.string().optional(),
+        dispatcher_id: z.string().optional(),
+        driver_id: z.string().optional(),
+      }),
       responses: {
-        200: z.array(Order),
+        200: z.object({
+          items: z.array(Order),
+          next_key: z.string().nullable(),
+        }),
       },
     },
     getOrderById: {

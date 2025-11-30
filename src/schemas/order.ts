@@ -22,12 +22,21 @@ export const OrderItem = z.object({
 
 export type OrderItem = z.infer<typeof OrderItem>;
 
+export const OrderHistoryEntry = z.object({
+  status: OrderStatus,
+  date: z.coerce.date(),
+});
+
+export type OrderHistoryEntry = z.infer<typeof OrderHistoryEntry>;
+
 export const Order = z.object({
   tenant_id: z.string(),
   order_id: z.string(),
   client: User,
   items: z.array(OrderItem),
   status: OrderStatus,
+  created_at: z.coerce.date(),
+  history: z.array(OrderHistoryEntry),
 });
 
 export type Order = z.infer<typeof Order>;
