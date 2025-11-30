@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const CreateProductRequest = z.object({
   name: z.string().nonempty(),
-  price: z.number(),
+  price: z.coerce.number().positive(),
   image: z.string().nullable().optional(),
 });
 

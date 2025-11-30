@@ -13,7 +13,7 @@ const DashboardPage = () => {
       <h1 className={twJoin(brixtonWood.className, 'mb-8 text-6xl uppercase')}>
         Dashboard
       </h1>
-      <nav className="wrap flex justify-center gap-x-8 gap-y-3 text-xl">
+      <nav className="wrap flex justify-center gap-x-8 gap-y-3 text-lg">
         {auth.user && auth.user.role !== 'admin' && (
           <Link
             href="/dashboard/panel"
@@ -29,6 +29,14 @@ const DashboardPage = () => {
         >
           <LuNewspaper className="mr-2 inline" />
           Todos los pedidos
+        </Link>
+        {/* {auth.user && auth.user.role === 'admin' && ( */}
+        <Link
+          href="/dashboard/catalog"
+          className="bg-accent text-background rounded px-6 py-3"
+        >
+          <LuCar className="mr-2 inline" />
+          Gestionar catálogo
         </Link>
       </nav>
     </main>
