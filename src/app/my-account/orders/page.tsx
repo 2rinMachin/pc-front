@@ -17,12 +17,14 @@ const UserOrdersPage = () => {
     error,
   } = useQuery({
     queryKey: ['orders', `user=${auth.user?.user_id}`],
-    queryFn: () =>
-      auth.user
+    queryFn: () => {
+      console.log('auth id:', auth.user?.user_id);
+      return auth.user
         ? apiClients.orders.getAllOrders({
             query: { client_id: auth.user.user_id },
           })
-        : null,
+        : null;
+    },
   });
 
   if (isLoading || auth.loading || !orders) return <LoadingScreen />;

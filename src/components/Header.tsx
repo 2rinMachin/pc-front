@@ -16,13 +16,7 @@ interface Link {
   allowedRoles?: UserRole[];
 }
 
-const links: Link[] = [
-  {
-    label: 'Dashboard',
-    href: '/dashboard',
-    allowedRoles: ['cook', 'dispatcher', 'driver', 'admin'],
-  },
-] as const;
+const links: Link[] = [] as const;
 
 const Header = () => {
   const auth = useAuth();

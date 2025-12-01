@@ -1,1 +1,1 @@
-# PizzaCold Restaurant Frontend
+# PizzaCold Customer Frontend
