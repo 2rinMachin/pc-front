@@ -86,6 +86,7 @@ const CartDrawer = ({
                   alt={p.name}
                   width={60}
                   height={60}
+                  unoptimized
                   className="rounded-md border border-black/10"
                 />
               )}
