@@ -1,12 +1,12 @@
 'use client';
 
-import { brixtonWood, sharpSans } from '@/fonts';
+import { brixtonWood } from '@/fonts';
 import { useAuth } from '@/hooks/use-auth';
 import Link from 'next/link';
 import { LuCar, LuNewspaper } from 'react-icons/lu';
 import { twJoin } from 'tailwind-merge';
-import { StatsPieChart } from '../../components/StatsPieChart';
 import { PopularProducts } from '../../components/PopularProducts';
+import { StatsPieChart } from '../../components/StatsPieChart';
 
 const DashboardPage = () => {
   const auth = useAuth();
@@ -18,25 +18,7 @@ const DashboardPage = () => {
       </h1>
 
       <section className="mx-auto max-w-4xl p-5">
-        <h2 className="mb-6 text-2xl font-semibold">
-          Estadísticas
-        </h2>
-        <StatsPieChart />
-      </section>
-
-      <section className="mx-auto max-w-4xl p-5">
-        <h2 className="mb-6 text-2xl font-semibold">
-          Productos más populares
-        </h2>
-        <PopularProducts />
-      </section>
-
-      <section className="mx-auto max-w-4xl p-5">
-        <h2 className="mb-6 text-2xl font-semibold">
-          Más opciones
-        </h2>
-
-        <nav className="wrap flex justify-center gap-x-8 gap-y-3 text-lg mb-12">
+        <nav className="wrap mb-12 flex justify-center gap-x-8 gap-y-3 text-lg">
           {auth.user && auth.user.role !== 'admin' && (
             <Link
               href="/dashboard/panel"
@@ -63,6 +45,16 @@ const DashboardPage = () => {
             </Link>
           )}
         </nav>
+      </section>
+
+      <section className="mx-auto max-w-4xl p-5">
+        <h2 className="mb-6 text-2xl font-semibold">Estadísticas</h2>
+        <StatsPieChart />
+      </section>
+
+      <section className="mx-auto max-w-4xl p-5">
+        <h2 className="mb-6 text-2xl font-semibold">Productos más populares</h2>
+        <PopularProducts />
       </section>
     </main>
   );
