@@ -1,10 +1,12 @@
 'use client';
 
 import { useApiClients } from '@/hooks/use-api-clients';
+import { useAuth } from '@/hooks/use-auth';
 import { useCart } from '@/hooks/use-cart';
 import { Product } from '@/schemas/product';
 import { formatPrice } from '@/util';
 import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 interface CheckoutItem {
@@ -13,6 +15,7 @@ interface CheckoutItem {
 }
 
 const CheckoutPage = () => {
+  const auth = useAuth();
   const { items, clearCart } = useCart();
   const apiClients = useApiClients();
   const router = useRouter();
@@ -86,12 +89,22 @@ const CheckoutPage = () => {
         Total: {formatPrice(total)}
       </div>
 
-      <button
-        onClick={handleConfirm}
-        className="mt-6 w-full rounded-md bg-black py-3 font-medium text-white hover:bg-black/80"
-      >
-        Confirmar pedido
-      </button>
+      {auth.user ? (
+        <button
+          onClick={handleConfirm}
+          className="mt-6 w-full rounded-md bg-black py-3 font-medium text-white hover:bg-black/80"
+        >
+          Confirmar pedido
+        </button>
+      ) : (
+        <div className="my-8 text-center text-xl">
+          ¡Necesitas{' '}
+          <Link className="text-accent font-semibold underline" href="/login">
+            iniciar sesión
+          </Link>{' '}
+          para hacer tu pedido!
+        </div>
+      )}
     </main>
   );
 };
