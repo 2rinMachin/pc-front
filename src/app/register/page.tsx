@@ -17,6 +17,7 @@ const RegisterPage = () => {
       email: '',
       username: '',
       password: '',
+      role: 'client' as const,
     },
   });
 
@@ -64,17 +65,6 @@ const RegisterPage = () => {
           className="border-muted block w-full rounded border px-3 py-4"
           {...form.register('password', { required: true })}
         />
-        <select
-          className="border-muted block w-full rounded border px-3 py-4"
-          {...form.register('role', { required: true })}
-        >
-          <option disabled>¿Qué tipo de usuario eres?</option>
-          <option value="client">cliente</option>
-          <option value="cook">cocinero</option>
-          <option value="dispatcher">despachador</option>
-          <option value="driver">conductor</option>
-          <option value="admin">administrador</option>
-        </select>
         <button className="bg-accent text-background block w-full cursor-pointer rounded px-3 py-3 transition-all hover:brightness-85">
           Registrarse
         </button>
